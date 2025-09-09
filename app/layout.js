@@ -1,6 +1,7 @@
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Inter, Roboto_Mono } from "next/font/google";
+import Provider from "./provider";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -24,7 +25,9 @@ export default function RootLayout({ children }) {
         <body
           className={`${inter.variable} ${robotoMono.variable} antialiased`}
         >
-          {children}
+          <Provider>
+            {children}
+          </Provider>
         </body>
       </html>
     </ClerkProvider>
