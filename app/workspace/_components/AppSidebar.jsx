@@ -1,4 +1,5 @@
-import React from "react";
+"use client"
+import React, { use } from "react";
 
 import Image from "next/image";
 
@@ -17,7 +18,8 @@ import {
 } from "../../../@/components/ui/sidebar";
 import { Button } from "../../../components/ui/button";
 import { title } from "process";
-import { Book, BookIcon, Compass, Layout, LayoutDashboard, PencilRulerIcon, UserIcon } from "lucide-react";
+import { Book, BookIcon, Compass, Layout, LayoutDashboard, LogsIcon, PencilRulerIcon, UserIcon } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 const SideBarOptions=[
     {
@@ -47,13 +49,15 @@ const SideBarOptions=[
     },
     {
         title:'Profile',
-        icon: UserIcon,
+        icon: LogsIcon,
         path: '/workspace/profile'
     }
     
 ]
 
 export default function AppSidebar() {
+
+    const path = usePathname();
     return (
         <Sidebar>
             <SidebarHeader className={'p-4'}>
@@ -68,9 +72,10 @@ export default function AppSidebar() {
                         <SidebarMenu>
                             {SideBarOptions.map((item, index) => (
                                 <SidebarMenuItem key={index}>
-                                    <SidebarMenuButton asChild>
-                                        <Link href={item.path}>
-                                            <item.icon />
+                                    <SidebarMenuButton asChild className={'p-5'}>
+                                        <Link href={item.path} className={`text-[17px]
+                                            ${path.includes(item.path)&&'text-primary bg-purple-50'}`}>
+                                            <item.icon className='h-7 w-7' />
                                             <span>{item.title}</span>
                                         </Link>
                                     </SidebarMenuButton>
