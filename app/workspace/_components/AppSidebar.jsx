@@ -6,53 +6,54 @@ import Image from "next/image";
 import Link from "next/link";
 
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarMenu,
-  SidebarHeader,
-  SidebarMenuButton,
-  SidebarMenuItem,
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarGroup,
+    SidebarGroupContent,
+    SidebarMenu,
+    SidebarHeader,
+    SidebarMenuButton,
+    SidebarMenuItem,
 } from "../../../@/components/ui/sidebar";
 import { Button } from "../../../components/ui/button";
 import { title } from "process";
 import { Book, BookIcon, Compass, Layout, LayoutDashboard, LogsIcon, PencilRulerIcon, UserIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
+import AddNewCourseDialog from "./AddNewCourseDialog";
 
-const SideBarOptions=[
+const SideBarOptions = [
     {
-        title:'Dashboard',
+        title: 'Dashboard',
         icon: LayoutDashboard,
         path: '/workspace'
     },
     {
-        title:'My Learning',
+        title: 'My Learning',
         icon: Book,
         path: '/workspace/my-courses'
     },
     {
-        title:'Explore Courses',
+        title: 'Explore Courses',
         icon: Compass,
         path: '/workspace/explore'
     },
     {
-        title:'AI Tools',
+        title: 'AI Tools',
         icon: PencilRulerIcon,
         path: '/workspace/ai-tools'
     },
     {
-        title:'Billing',
+        title: 'Billing',
         icon: BookIcon,
         path: '/workspace/billing'
     },
     {
-        title:'Profile',
+        title: 'Profile',
         icon: LogsIcon,
         path: '/workspace/profile'
     }
-    
+
 ]
 
 export default function AppSidebar() {
@@ -65,7 +66,9 @@ export default function AppSidebar() {
             </SidebarHeader>
             <SidebarContent>
                 <SidebarGroup>
-                    <Button>Create New Course</Button>
+                    <AddNewCourseDialog>
+                        <Button>Create New Course</Button>
+                    </AddNewCourseDialog>
                 </SidebarGroup >
                 <SidebarGroup>
                     <SidebarGroupContent>
@@ -74,7 +77,7 @@ export default function AppSidebar() {
                                 <SidebarMenuItem key={index}>
                                     <SidebarMenuButton asChild className={'p-5'}>
                                         <Link href={item.path} className={`text-[17px]
-                                            ${path.includes(item.path)&&'text-primary bg-purple-50'}`}>
+                                            ${path.includes(item.path) && 'text-primary bg-purple-50'}`}>
                                             <item.icon className='h-7 w-7' />
                                             <span>{item.title}</span>
                                         </Link>
