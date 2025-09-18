@@ -1,7 +1,14 @@
-import React from 'react';
+import React from "react";
+import WelcomeBanner from "./_components/WelcomeBanner";
+import CourseList from "./_components/CourseList";
 
-export default function WorkspacePage() {
+function WorkspacePage() {
     return (
-        <div>Workspace</div>
-    );
+        <div>
+            <WelcomeBanner />
+            <CourseList />
+        </div>
+    )
 }
+
+export default WorkspacePage;

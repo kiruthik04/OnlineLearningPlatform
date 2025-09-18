@@ -25,7 +25,7 @@ const SideBarOptions=[
     {
         title:'Dashboard',
         icon: LayoutDashboard,
-        path: '/#'
+        path: '/workspace'
     },
     {
         title:'My Learning',
