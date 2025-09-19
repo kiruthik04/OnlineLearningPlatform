@@ -1,4 +1,4 @@
-import React, { useState  } from "react";
+import React, { useState } from "react";
 import {
     Dialog,
     DialogContent,
@@ -18,10 +18,13 @@ import { Input } from "../../../@/components/ui/input";
 import { Textarea } from "../../../@/components/ui/textarea";
 import { Switch } from "../../../@/components/ui/switch"
 import { Button } from "../../../@/components/ui/button";
-import { SparkleIcon } from "lucide-react";
+import { Loader2Icon, SparkleIcon } from "lucide-react";
 import { desc } from "drizzle-orm";
 
 function AddNewCourseDialog({ children }) {
+
+    const [loading, setLoading] = useState(false);
+    
 
     const [formData, setFormData] = useState({
         name: '',
@@ -40,8 +43,14 @@ function AddNewCourseDialog({ children }) {
         console.log(formData);
     }
 
-    const onGenerate = () => {
+    const onGenerate = async () => {
         console.log(formData);
+        setLoading(true);
+        const result = await axios.post('/api/generate-course-layout', {
+            ...formData
+        });
+        console.log(result.data);
+        setLoading(false);
         // API call to generate course using AI
     }
     return (
@@ -93,7 +102,10 @@ function AddNewCourseDialog({ children }) {
                         </div>
                     </DialogDescription>
                 </DialogHeader>
-                <Button className="mt-5" onClick={onGenerate}> <SparkleIcon /> Create Course</Button>
+                <Button className="mt-5" onClick={onGenerate} disabled={loading}>
+                    {loading ? <Loader2Icon className='animate-spin' /> :
+                        <SparkleIcon />} Create Course
+                </Button>
             </DialogContent>
         </Dialog >
     )
