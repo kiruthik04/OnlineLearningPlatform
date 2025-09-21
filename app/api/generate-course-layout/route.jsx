@@ -31,46 +31,42 @@ User Input:
 `;
 
 export async function POST(req) {
-  try {
     const formData = await req.json();
-    const user = await currentUser();
-
+    
     const ai = new GoogleGenAI({
-      apiKey: process.env.GEMINI_API_KEY,
+        apiKey: process.env.GEMINI_API_KEY,
     });
+
+    const config = {
+        responseMimeType: 'text/plain',
+    };
+    const model = 'gemini-2.0-flash';
+    const contents = [
+        {
+            role: 'user',
+            parts: [
+                {
+                    text: PROMPT + JSON.stringify(formData),
+                },
+            ],
+        },
+    ];
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
-      contents: [
-        {
-          role: 'user',
-          parts: [{ text: PROMPT + JSON.stringify(formData) }],
-        },
-      ],
+        model,
+        config,
+        contents,
     });
+    console.log(response.text());
 
-    const text = response.text();
-
-    let parsed;
-    try {
-      parsed = JSON.parse(text);
-    } catch (e) {
-      parsed = { raw: text }; // fallback
-    }
-
-    // Optional: Save in DB
-    // await db.insert(coursesTable).values({
-    //   ...formData,
-    //   courseJson: parsed,
-    //   userEmail: user?.primaryEmailAddress?.emailAddress
-    // });
-
-    return NextResponse.json(parsed);
-  } catch (err) {
-    console.error("API Error:", err);
-    return NextResponse.json(
-      { error: "Failed to generate course" },
-      { status: 500 }
-    );
-  }
+    const result = await db.insert(coursesTable).values({
+        ...formData,
+        courseJson:response.text()
+        userEmail: 
+    })
+    return NextResponse.json(response.text());
 }
+
+
+
+
