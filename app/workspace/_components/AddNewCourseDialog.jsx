@@ -112,6 +112,7 @@ function AddNewCourseDialog({ children }) {
                                         <SelectItem value="advanced">Hard</SelectItem>
                                     </SelectContent>
                                 </Select>
+                                
                             </div>
                             <div className="flex flex-col gap-1">
                                 <label className="font-bold">Category:</label>
