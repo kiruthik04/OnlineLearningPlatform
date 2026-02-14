@@ -5,7 +5,6 @@ export const usersTable = pgTable("users", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: varchar({ length: 255 }).notNull(),
   email: varchar({ length: 255 }).notNull().unique(),
-  subscriptionId: varchar()
 });
 
 export const coursesTable = pgTable("courses", {
@@ -17,6 +16,17 @@ export const coursesTable = pgTable("courses", {
   includeVideo: boolean().default(false),
   level: varchar().notNull(),
   category: varchar(),
-  coursesJson: json(),
+  courseBanner: varchar(),
   userEmail: varchar('userEmail').references(() => usersTable.email)
-})
+});
+
+export const chaptersTable = pgTable("chapters", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  courseId: varchar().notNull(),
+  chapterId: integer().notNull(), // This will serve as the order/index
+  name: varchar().notNull(),
+  duration: varchar(),
+  topics: json(),
+  content: json(),
+  videoId: varchar().notNull().default('pending')
+});

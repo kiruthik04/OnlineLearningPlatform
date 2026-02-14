@@ -22,8 +22,11 @@ import { Switch } from "../../../@/components/ui/switch";
 import { Button } from "../../../@/components/ui/button";
 import { Loader2Icon, SparkleIcon } from "lucide-react";
 
+import { useRouter } from "next/navigation";
+
 function AddNewCourseDialog({ children }) {
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
 
     const [formData, setFormData] = useState({
         name: "",
@@ -48,11 +51,13 @@ function AddNewCourseDialog({ children }) {
             const result = await axios.post("/api/generate-course-layout", {
                 ...formData
             });
+            if (result.data.result) {
+                setLoading(false);
+                router.push('/create-course/' + result.data.result.id);
+            }
             console.log(result.data);
-            setLoading(false);
         }
-        catch(e)
-        {
+        catch (e) {
             setLoading(false);
             console.log(e);
         }
@@ -112,7 +117,7 @@ function AddNewCourseDialog({ children }) {
                                         <SelectItem value="advanced">Hard</SelectItem>
                                     </SelectContent>
                                 </Select>
-                                
+
                             </div>
                             <div className="flex flex-col gap-1">
                                 <label className="font-bold">Category:</label>
